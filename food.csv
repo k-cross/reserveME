@@ -1,0 +1,11 @@
+fID,dishName,category,ingredients,price,stock,ordered,lunch,dinner
+101,Sushi,Rice,"Fish, Vinegar, Rice, Seaweed, Avacado, Cucumber",10,20,3,FALSE,TRUE
+102,Pad Thai,Noodles,,6.5,20,4,TRUE,TRUE
+103,Yakitori,Grilled,,8,10,5,FALSE,TRUE
+104,Ramen,Noodles,,5,30,6,TRUE,TRUE
+105,Curry,Curry,,5,40,7,TRUE,TRUE
+106,Soon Dubu,Soup,,8.5,20,5,TRUE,TRUE
+107,Sam Gae Tang,Soup,,14,5,3,TRUE,TRUE
+108,Spicy Chicken,Meat,,8,5,2,FALSE,TRUE
+109,Chow Mein,Noodles,,5.5,30,5,TRUE,TRUE
+110,Ice Cream,Dessert,,4,20,6,FALSE,TRUE
