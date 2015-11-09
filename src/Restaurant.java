@@ -48,7 +48,7 @@ public class Restaurant
 	{
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT * FROM user WHERE userName=?");
+			this.statement = this.connection.prepareStatement("SELECT * FROM users WHERE uname=?");
 			this.statement.setString(1, username);
 			this.resultSet = this.statement.executeQuery();
 			if(resultSet.next())
@@ -59,7 +59,7 @@ public class Restaurant
 				invaildPW = false;
 			else
 				return false;
-			user = new User(resultSet.getInt("userID"), resultSet.getString("name"), resultSet.getString("userName"), resultSet.getString("password"), resultSet.getString("type"));
+			user = new User(resultSet.getInt("userID"), resultSet.getString("name"), resultSet.getString("uname"), resultSet.getString("pw"), resultSet.getString("usertype"));
 		}
 		catch(Exception e)
 		{
@@ -210,7 +210,7 @@ public class Restaurant
 	{
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT userName FROM user WHERE userName=?");
+			this.statement = this.connection.prepareStatement("SELECT uname FROM users WHERE uname=?");
 			this.statement.setString(1, userName);
 			this.resultSet = this.statement.executeQuery();
 			if(resultSet.next())
@@ -220,13 +220,13 @@ public class Restaurant
 			}
 			else
 			{
-				this.statement = this.connection.prepareStatement("INSERT INTO user (name, userName, password, type) VALUES (?, ?, ?, ?)");
+				this.statement = this.connection.prepareStatement("INSERT INTO users (name, uname, pw, type) VALUES (?, ?, ?, ?)");
 				this.statement.setString(1, name);
 				this.statement.setString(2, userName);
 				this.statement.setString(3, password);
 				this.statement.setString(4, userType);
 				this.statement.executeUpdate();
-				this.statement = this.connection.prepareStatement("SELECT userName FROM user WHERE userName=?");
+				this.statement = this.connection.prepareStatement("SELECT uname FROM users WHERE uname=?");
 				this.statement.setString(1, userName);
 				this.resultSet = this.statement.executeQuery();
 				if(resultSet.next())
@@ -249,15 +249,15 @@ public class Restaurant
 	{
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT userName FROM user WHERE userName=?");
+			this.statement = this.connection.prepareStatement("SELECT uname FROM users WHERE uname=?");
 			this.statement.setString(1, userName);
 			this.resultSet = this.statement.executeQuery();
 			if(resultSet.next())
 			{
-				this.statement = this.connection.prepareStatement("DELETE FROM user WHERE userName=?");
+				this.statement = this.connection.prepareStatement("DELETE FROM users WHERE uname=?");
 				this.statement.setString(1, userName);
 				this.statement.executeUpdate();
-				this.statement = this.connection.prepareStatement("SELECT userName FROM user WHERE userName=?");
+				this.statement = this.connection.prepareStatement("SELECT uname FROM users WHERE uname=?");
 				this.statement.setString(1, userName);
 				this.resultSet = this.statement.executeQuery();
 				if(!resultSet.next())
@@ -285,16 +285,16 @@ public class Restaurant
 	{
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT * FROM user WHERE userID=?");
+			this.statement = this.connection.prepareStatement("SELECT * FROM users WHERE userID=?");
 			this.statement.setInt(1, userID);
 			this.resultSet = this.statement.executeQuery();
 			if(resultSet.next())
 			{
-				this.statement = this.connection.prepareStatement("UPDATE user SET password=? WHERE userID=?");
+				this.statement = this.connection.prepareStatement("UPDATE users SET pw=? WHERE userID=?");
 				this.statement.setString(1, password);
 				this.statement.setInt(2, userID);
 				this.statement.executeUpdate();
-				this.statement = this.connection.prepareStatement("SELECT userName FROM user WHERE userID=? AND password=?");
+				this.statement = this.connection.prepareStatement("SELECT uname FROM users WHERE userID=? AND pw=?");
 				this.statement.setInt(1, userID);
 				this.statement.setString(2, password);
 				this.resultSet = this.statement.executeQuery();
