@@ -73,8 +73,10 @@ DROP TABLE IF EXISTS orders;
 CREATE TABLE orders 
     (
         orderID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-        userID INTEGER FOREIGN KEY REFERENCES users(userID),
-        foodID INTEGER FOREIGN KEY REFERENCES foods(foodID)
+        userID INTEGER,
+        foodID INTEGER,
+        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (foodID) REFERENCES foods(foodID)     
     );
 
 INSERT INTO orders (orderID, userID, foodID) VALUES(1,101,101);
@@ -93,14 +95,17 @@ DROP TABLE IF EXISTS reservations;
 CREATE TABLE reservations
     (
         reservationID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        userID INTEGER FOREIGN KEY REFERENCES users(userID),
-        tableID INTEGER FOREIGN KEY REFERENCES tables(tableID),
-        orderID INTEGER FOREIGN KEY REFERENCES orders(orderID),
+        userID INTEGER, 
+        tableID INTEGER,
+        orderID INTEGER,
         people INTEGER,
-        resDate DATETIME
+        resDate DATETIME,
+        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (tableID) REFERENCES tables(tableID),
+        FOREIGN KEY (orderID) REFERENCES orders(orderID)
     );
 
 INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate) 
-VALUES(1, 103, 3, 115, 4, '11-11-2015 18:30:00');
+VALUES(1, 103, 3, 10, 4, '11-11-2015 18:30:00');
 
 QUIT
