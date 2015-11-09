@@ -1,11 +1,14 @@
 fID,dishName,category,ingredients,price,stock,ordered,lunch,dinner
-101,Sushi,Rice,"Fish, Vinegar, Rice, Seaweed, Avacado, Cucumber",10,20,3,FALSE,TRUE
-102,Pad Thai,Noodles,,6.5,20,4,TRUE,TRUE
-103,Yakitori,Grilled,,8,10,5,FALSE,TRUE
-104,Ramen,Noodles,,5,30,6,TRUE,TRUE
-105,Curry,Curry,,5,40,7,TRUE,TRUE
+101,Pot Sticker(6),Appetizer,,5.95,20,3,FALSE,TRUE
+102,Spring Rolls(3),Appetizer,,3.95,20,4,TRUE,TRUE
+103,Hot and Sour Soup,Soup,,6.95,10,5,FALSE,TRUE
+104,Mongolian Beef,Beef,,9.95,30,6,TRUE,TRUE
+105,Beer With Broccoli,Beef,,8.95,40,7,TRUE,TRUE
 106,Soon Dubu,Soup,,8.5,20,5,TRUE,TRUE
-107,Sam Gae Tang,Soup,,14,5,3,TRUE,TRUE
-108,Spicy Chicken,Meat,,8,5,2,FALSE,TRUE
-109,Chow Mein,Noodles,,5.5,30,5,TRUE,TRUE
-110,Ice Cream,Dessert,,4,20,6,FALSE,TRUE
+107,Sweet And Sour Pork,Pork,,7.95,5,3,TRUE,TRUE
+108,Mo Shu Pork,Pork,,7.95,5,2,FALSE,TRUE
+109,Kong Pao Prawns,Seafood,,10.95,30,5,TRUE,TRUE
+110,Orange Juice,Non-Alcoholic Drink,,2,20,6,FALSE,TRUE
+111,Pepsi,Non-Alcoholic Drink,,2,20,6,FALSE,TRUE
+112,Bud Light,Alcoholic Drink,,4.5,20,6,FALSE,TRUE
+113,Heineken,Alcoholic Drink,,4.5,20,6,FALSE,TRUE
