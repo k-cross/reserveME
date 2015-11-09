@@ -12,3 +12,10 @@ ReserveME is a restaurant reservation database application.
     * Submit in project.zip
     * No "package" statements
     * December 5th is the deadline
+
+## Useful Commands for Setup/ETC
+* mysql -h localhost -p -u root
+
+* All together...
+    * CREATE DATABASE reserveme;
+    * GRANT ALL ON reserveme.* TO 'cs157abnb'@'localhost' IDENTIFIED BY 'qweasdzxc';
