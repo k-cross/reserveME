@@ -30,7 +30,7 @@ public class Restaurant
 	{
 		try 
 		{
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/reserveme","root", "");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/reserveme","cs157abnb", "qweasdzxc");
 	 
 		}
 		catch (SQLException e) 
@@ -55,7 +55,7 @@ public class Restaurant
 				this.userNotFound = false;
 			else
 				return false;
-			if(resultSet.getString("password").equals(password))
+			if(resultSet.getString("pw").equals(password))
 				invaildPW = false;
 			else
 				return false;
