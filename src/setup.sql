@@ -1,6 +1,12 @@
 USE reserveme;
 
+DROP TABLE IF EXISTS reservations;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS foods;
+DROP TABLE IF EXISTS tables;
 DROP TABLE IF EXISTS users;
+
+
 CREATE TABLE users 
     (
         userID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -22,7 +28,6 @@ INSERT INTO users (userID, name, uname, pw, usertype) VALUES(109,'Some One', 'So
 INSERT INTO users (userID, name, uname, pw, usertype) VALUES(110,'Jeb Bush', 'notGonnaWin', 'qweasdzxc', 0);
 
 
-DROP TABLE IF EXISTS tables;
 CREATE TABLE tables
     (
         tableID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -47,7 +52,6 @@ INSERT INTO tables (tableID, people) VALUES(15,14);
 INSERT INTO tables (tableID, people) VALUES(16,15);
 
 
-DROP TABLE IF EXISTS foods;
 CREATE TABLE foods
     (
         foodID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -69,7 +73,6 @@ INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(109, 'Chow
 INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(110, 'Ice Cream', 'Dessert', 4, 20);
 
 
-DROP TABLE IF EXISTS orders;
 CREATE TABLE orders 
     (
         orderID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
@@ -91,7 +94,6 @@ INSERT INTO orders (orderID, userID, foodID) VALUES(9,109,109);
 INSERT INTO orders (orderID, userID, foodID) VALUES(10,110,110);
 
 
-DROP TABLE IF EXISTS reservations;
 CREATE TABLE reservations
     (
         reservationID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
