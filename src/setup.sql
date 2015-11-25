@@ -78,20 +78,21 @@ CREATE TABLE orders
         orderID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
         userID INTEGER,
         foodID INTEGER,
+        processed BOOLEAN,
         FOREIGN KEY (userID) REFERENCES users(userID),
         FOREIGN KEY (foodID) REFERENCES foods(foodID)     
     );
 
-INSERT INTO orders (orderID, userID, foodID) VALUES(1,101,101);
-INSERT INTO orders (orderID, userID, foodID) VALUES(2,102,102);
-INSERT INTO orders (orderID, userID, foodID) VALUES(3,103,103);
-INSERT INTO orders (orderID, userID, foodID) VALUES(4,104,104);
-INSERT INTO orders (orderID, userID, foodID) VALUES(5,105,105);
-INSERT INTO orders (orderID, userID, foodID) VALUES(6,106,106);
-INSERT INTO orders (orderID, userID, foodID) VALUES(7,107,107);
-INSERT INTO orders (orderID, userID, foodID) VALUES(8,108,108);
-INSERT INTO orders (orderID, userID, foodID) VALUES(9,109,109);
-INSERT INTO orders (orderID, userID, foodID) VALUES(10,110,110);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(2,102,102, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(3,103,103, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(4,104,104, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(5,105,105, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(6,106,106, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(7,107,107, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(8,108,108, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(9,109,109, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(10,110,110, true);
 
 
 CREATE TABLE reservations
@@ -102,12 +103,13 @@ CREATE TABLE reservations
         orderID INTEGER,
         people INTEGER,
         resDate DATETIME,
+        updatedAt DATETIME,
         FOREIGN KEY (userID) REFERENCES users(userID),
         FOREIGN KEY (tableID) REFERENCES tables(tableID),
         FOREIGN KEY (orderID) REFERENCES orders(orderID)
     );
 
-INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate) 
-VALUES(1, 103, 3, 10, 4, '11-11-2015 18:30:00');
+INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(1, 103, 3, 10, 4, '11-11-2015 18:30:00', '11-11-2015 18:30:00');
 
 QUIT
