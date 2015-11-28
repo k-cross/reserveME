@@ -78,11 +78,14 @@ FROM Foods
 WHERE price > ?; #WHERE price < ?
 
 #14
-#Sort with the most popular food
-SELECT dishName
-FROM Foods
-GROUP BY ordered
-ORDER BY SUM(ordered) DESC;
+#Correlated Subquery
+#Will give the chepeast items for all categories
+SELECT foodID, dishName, category, price 
+FROM foods AS lessThan
+WHERE price <= (
+	SELECT AVG(Price)
+    FROM foods
+    WHERE category = lessThan.category);
 
 #15
 #View open tables
@@ -116,16 +119,7 @@ BEGIN
 END; //
 delimiter ;
 
-#Correlated Subquery
-#Will give the chepeast items for all categories
-SELECT foodID, dishName, category, price 
-FROM foods AS lessThan
-WHERE price <= (
-	SELECT AVG(Price)
-    FROM foods
-    WHERE category = lessThan.category);
-
-#Procedure
+#Procedure 1
 #View open tables
 DROP PROCEDURE IF EXISTS GetAllOpenTables;
 DELIMITER //
