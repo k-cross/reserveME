@@ -61,16 +61,19 @@ CREATE TABLE foods
         ordered INTEGER
     );
 
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(101, 'Sushi', 'Rice', 10, 20);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(102, 'Pad Thai', 'Noodles',6.5,20);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(103, 'Yakitori', 'Grilled', 8, 10);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(104, 'Ramen', 'Noodles', 5, 30);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(105, 'Curry', 'Curry', 5, 40);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(106, 'Soon Dubu', 'Soup', 8.5, 20);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(107, 'Sam Gae Tang', 'Soup', 14, 5);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(108, 'Spicy Chicken', 'Meat', 8, 5);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(109, 'Chow Mein', 'Noodles', 5.5, 30);
-INSERT INTO foods (foodID, dishname, category, price, ordered) VALUES(110, 'Ice Cream', 'Dessert', 4, 20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (101,'Pot Sticker(6)','Appetizer',5.95,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (102,'Spring Rolls(3)','Appetizer',3.95,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (103,'Hot and Sour Soup','Soup',6.95,10);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (104,'Mongolian Beef','Beef',9.95,30);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (105,'Beer With Broccoli','Beef',8.95,40);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (106,'Soon Dubu','Soup',8.5,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (107,'Sweet And Sour Pork','Pork',7.95,5);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (108,'Mo Shu Pork','Pork',7.95,5);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (109,'Kong Pao Prawns','Seafood',10.95,30);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (110,'Orange Juice','Non-Alcoholic Drink',2,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (111,'Pepsi','Non-Alcoholic Drink',2,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (112,'Bud Light','Alcoholic Drink',4.5,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (113,'Heineken','Alcoholic Drink',4.5,20);
 
 
 CREATE TABLE orders 
