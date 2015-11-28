@@ -91,25 +91,28 @@ FROM tables
 WHERE people = 0; #0 people mean that the table is free
 
 #Trigger 1
-#Delete User
-DROP TRIGGER IF EXISTS DeleteUserTrigger;
+#Decrement ordered after deletion of an orderID
+DROP TRIGGER IF EXISTS DecrementOrderTrigger;
 delimiter //
-CREATE TRIGGER DeleteUserTrigger
-AFTER DELETE ON Users FOR EACH ROW 
+CREATE TRIGGER DecrementOrderTrigger
+AFTER DELETE ON orders FOR EACH ROW 
 BEGIN
-	DELETE FROM Reservations WHERE userID = Old.userID;
-    DELETE FROM Orders WHERE userID = Old.userID;
+	UPDATE Foods
+    SET ordered = ordered - 1
+    WHERE Old.foodID = foods.foodID;
 END; //
 delimiter ;
 
 #Trigger 2
-#Delete Order
-DROP TRIGGER IF EXISTS DeleteOrderTrigger;
+#Increment ordered after insertion of an order with a given foodID
+DROP TRIGGER IF EXISTS IncrementOrderTrigger;
 delimiter //
-CREATE TRIGGER DeleteOrderTrigger
-AFTER DELETE ON Orders FOR EACH ROW 
+CREATE TRIGGER IncrementOrderTrigger
+AFTER INSERT ON orders FOR EACH ROW 
 BEGIN
-	DELETE FROM Reservations WHERE orderID = Old.orderID;
+	UPDATE Foods
+    SET ordered = ordered + 1
+    WHERE New.foodID = foods.foodID;
 END; //
 delimiter ;
 
