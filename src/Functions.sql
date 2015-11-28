@@ -1,72 +1,72 @@
 #1
 #Add user
 #Prepared Statement
-INSERT INTO Users (uID, name, uName, pw, userType) VALUES (?, ? , ?, ?, ?);
+INSERT INTO Users (userID, name, uname, pw, usertype) VALUES (?, ? , ?, ?, ?);
 
 #2
 #Delete user
 #Prepared Statement
 DELETE FROM Users
-WHERE uID = ?;
+WHERE userID= ?;
 
 #3
 #Update user
 #Prepared Statement
 UPDATE Users
 SET pw = 'qweasdzxc' #Can update name, uName, or userType
-WHERE uID = ?;
+WHERE userID= ?;
 
 #4
 #Add reservation
 #Prepared Statement
-INSERT INTO Reservations (rID, uID, tID, oID, people, dateTime) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO Reservations (reservationID, userID, tableID, orderID, people, resDate) VALUES (?, ?, ?, ?, ?, ?);
 
 #5
 #Delete reservation
 #Prepared Statement
 DELETE FROM Reservations
-WHERE uID = ?;
+WHERE userID= ?;
 
 #6
 #Update reservation
 #Prepared Statement
 UPDATE Reservations
-SET dateTime = '2015-11-11 18:30:00' 
-WHERE uID = ?;
+SET resDate= '2015-11-11 18:30:00' 
+WHERE userID= ?;
 
 #7
 #Add order
 #Prepared Statement
-INSERT INTO Orders (oID, uID, fID, dateTime) VALUES (?, ?, ?, ?);
+INSERT INTO Orders (orderID, userID, foodID) VALUES (?, ?, ?);
 
 #8
 #Delete order
 #Prepared Statement
 DELETE FROM Orders
-WHERE oID = ?;
+WHERE orderID= ?;
 
 #9
 #Update order
 #Prepared Statement
 UPDATE Orders
-SET fID = 'Beer With Broccoli' 
-WHERE oID = ?;
+SET foodID= 'Beer With Broccoli' 
+WHERE orderID= ?;
 
 #10
 # Sort the menu with price in decreasing or increasing order 
-SELECT foodID, dishName, category, price
+SELECT foodID, dishname, category, price
 FROM Foods
 ORDER BY Price; #DESC or ASC(default)
 
 #11
 #Sort the menu by category
-SELECT foodID, dishName, category, price
+SELECT foodID, dishname, category, price
 FROM Foods
 WHERE category = 'Appetizer';
 
 #12
 # Sort the menu by name in alphabetical order.
-SELECT foodID, dishName, category, price
+SELECT foodID, dishname, category, price
 FROM Foods
 ORDER BY dishName;
 
@@ -78,14 +78,55 @@ FROM Foods
 WHERE price > ?; #WHERE price < ?
 
 #14
-#Sort with the most popular food
-SELECT dishName
-FROM Foods
-GROUP BY ordered
-ORDER BY SUM(ordered) DESC;
+#Correlated Subquery
+#Will give the chepeast items for all categories
+SELECT foodID, dishName, category, price 
+FROM foods AS lessThan
+WHERE price <= (
+	SELECT AVG(Price)
+    FROM foods
+    WHERE category = lessThan.category);
 
 #15
 #View open tables
-SELECT tID
+SELECT tableID
 FROM tables
 WHERE people = 0; #0 people mean that the table is free
+
+#Trigger 1
+#Decrement ordered after deletion of an orderID
+DROP TRIGGER IF EXISTS DecrementOrderTrigger;
+delimiter //
+CREATE TRIGGER DecrementOrderTrigger
+AFTER DELETE ON orders FOR EACH ROW 
+BEGIN
+	UPDATE Foods
+    SET ordered = ordered - 1
+    WHERE Old.foodID = foods.foodID;
+END; //
+delimiter ;
+
+#Trigger 2
+#Increment ordered after insertion of an order with a given foodID
+DROP TRIGGER IF EXISTS IncrementOrderTrigger;
+delimiter //
+CREATE TRIGGER IncrementOrderTrigger
+AFTER INSERT ON orders FOR EACH ROW 
+BEGIN
+	UPDATE Foods
+    SET ordered = ordered + 1
+    WHERE New.foodID = foods.foodID;
+END; //
+delimiter ;
+
+#Procedure 1
+#View open tables
+DROP PROCEDURE IF EXISTS GetAllOpenTables;
+DELIMITER //
+CREATE PROCEDURE GetAllOpenTables()
+BEGIN
+	SELECT tableID
+    FROM Tables
+    WHERE people = 0; # 0 people mean that the table is free
+END; //
+DELIMITER ; 
