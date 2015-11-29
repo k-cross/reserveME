@@ -10,6 +10,7 @@ public class Restaurant
 	private Connection connection;
 	private PreparedStatement statement;
 	private ResultSet resultSet;
+	private String message;
 	
 	private boolean userNotFound = true;
 	private boolean invaildPW = true;
@@ -23,6 +24,7 @@ public class Restaurant
 		this.connection = null;
 		this.statement = null;
 		this.resultSet = null;
+		this.message = "";
 	}
 	
 	// connect to database
@@ -31,12 +33,10 @@ public class Restaurant
 		try 
 		{
 			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/reserveme","cs157abnb", "qweasdzxc");
-	 
 		}
 		catch (SQLException e) 
 		{
-			System.out.println("Connection Failed! Check output console");
-			e.printStackTrace();
+			return false;
 		}
 		if (this.connection != null)
 			return true;
@@ -65,26 +65,17 @@ public class Restaurant
 		{
 			System.out.println(e.toString());
 		}
-		switch(user.getType())
-		{
-			case "manager":
-				manager(user);
-				break;
-			case "staff":
-				staff(user);
-				break;
-			case "customer":
-				customer(user);
-				break;
-			default:
-				break;
-		}
 		return true;
 	}
 	
-	public boolean getUser()
+	public boolean findUser()
 	{
 		return this.userNotFound;
+	}
+	
+	public User getUser()
+	{
+		return this.user;
 	}
 	
 	public boolean checkPW()
@@ -92,119 +83,12 @@ public class Restaurant
 		return this.invaildPW;
 	}
 	
-	// different user types
-	private void manager(User user)
+	public String getMessage()
 	{
-		String name=null, userName=null, passWord=null;
-		boolean quit = false;
-		while (!quit)
-		{
-			System.out.print("\n --- Manager Menu ---" 
-					+ "\n 1. List of Orders"
-					+ "\n 2. List of Tables"
-					+ "\n 3. List of Reservations"
-					+ "\n 4. Add Staff"
-					+ "\n 5. Detele Staff"
-					+ "\n 6. Quit"
-					+ "\n\n[ Enter the Number of Your Choice : ] > ");
-			switch(input.next())
-			{
-				case "1":
-					break;
-				case "2":
-					break;
-				case "3":
-					break;
-				case "4":
-					System.out.print("\n[ Enter your name : ] > ");
-					name = (input.hasNext())? input.next():null;
-					System.out.print("\n[ Enter your Username : ] > ");
-					userName = (input.hasNext())? input.next():null;
-					System.out.print("\n[ Enter your Password : ] > ");
-					passWord = (input.hasNext())? input.next():null;
-					if(!this.insertUser(name, userName, passWord, "staff"))
-						System.out.println("Creation Failed!");
-					break;
-				case "5":
-					System.out.print("\n[ Enter your Username : ] > ");
-					userName = (input.hasNext())? input.next():null;
-					if(!this.deleteUser(userName))
-						System.out.println("Deteletion Failed!");
-					break;
-				case "6":
-					quit = true; 
-					break;
-				default:
-					break;
-			}
-		}
+		return this.message;
 	}
 	
-	private void staff(User user)
-	{
-		boolean quit = false;
-		while (!quit)
-		{
-			System.out.print("\n --- Staff Menu ---" 
-					+ "\n 1. List of Orders"
-					+ "\n 2. List of Tables"
-					+ "\n 3. List of Reservations"
-					+ "\n 4. Account"
-					+ "\n 5. Quit"
-					+ "\n\n[ Enter the Number of Your Choice : ] > ");
-			switch(input.next())
-			{
-				case "1":
-					break;
-				case "2":
-					break;
-				case "3":
-					break;
-				case "4":
-					break;
-				case "5":
-					quit = true; 
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	
-	private void customer(User user)
-	{
-		boolean quit = false;
-		while (!quit)
-		{
-			System.out.print("\n --- Customer Menu ---" 
-					+ "\n 1. Make an Orders"
-					+ "\n 2. Make an Reservations"
-					+ "\n 3. Update Password"
-					+ "\n 4. Quit"
-					+ "\n\n[ Enter the Number of Your Choice : ] > ");
-			switch(input.next())
-			{
-				case "1":
-					break;
-				case "2":
-					break;
-				case "3":
-					System.out.print("\n[ Enter your new Password : ] > ");
-					String passWord = (input.hasNext())? input.next():null;
-					if(!this.updatePassword(user.getUserID(), passWord))
-						System.out.println("The password has not been updated!");
-					break;
-				case "4":
-					break;
-				case "5":
-					quit = true; 
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	
+
 	// functions
 	public boolean insertUser(String name, String userName, String password, String userType)
 	{
@@ -220,7 +104,7 @@ public class Restaurant
 			}
 			else
 			{
-				this.statement = this.connection.prepareStatement("INSERT INTO users (name, uname, pw, type) VALUES (?, ?, ?, ?)");
+				this.statement = this.connection.prepareStatement("INSERT INTO users (name, uname, pw, usertype) VALUES (?, ?, ?, ?)");
 				this.statement.setString(1, name);
 				this.statement.setString(2, userName);
 				this.statement.setString(3, password);
@@ -231,7 +115,6 @@ public class Restaurant
 				this.resultSet = this.statement.executeQuery();
 				if(resultSet.next())
 				{
-					System.out.println("Your account has been created!");
 					return true;
 				}
 				else
@@ -240,9 +123,8 @@ public class Restaurant
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.toString());
+			return false;
 		}
-		return false;
 	}
 	
 	public boolean deleteUser(String userName)
@@ -262,7 +144,7 @@ public class Restaurant
 				this.resultSet = this.statement.executeQuery();
 				if(!resultSet.next())
 				{
-					System.out.println("Your account has been deleted!");
+					message = "Your account has been deleted!";
 					return true;
 				}
 				else
@@ -270,18 +152,17 @@ public class Restaurant
 			}
 			else
 			{
-				System.out.println("The username is not existed!");
+				message = "The username is not existed!";
 				return false;
 			}
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.toString());
+			return false;
 		}
-		return false;
 	}
 	
-	private boolean updatePassword(int userID, String password)
+	public boolean updatePassword(int userID, String password)
 	{
 		try
 		{
@@ -300,21 +181,25 @@ public class Restaurant
 				this.resultSet = this.statement.executeQuery();
 				if(resultSet.next())
 				{
-					System.out.println("Your password has been updated!");
+					message = "Your password has been updated!";
 					return true;
 				}
 				else
+				{
+					message = "Fail to update the password!";
 					return false;
+				}
 			}
 			else
 			{
+				message = "Fail to update the password!";
 				return false;
 			}
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.toString());
+			message = "Fail to update the password!";
+			return false;
 		}
-		return false;
 	}
 }
