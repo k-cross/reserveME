@@ -93,6 +93,15 @@ SELECT tableID
 FROM tables
 WHERE people = 0; #0 people mean that the table is free
 
+#16
+#Top 3 most popular food, food is considered popular if greater than 20
+SELECT foodID,dishName,category,price
+FROM foods
+GROUP BY ordered
+HAVING ordered IS NOT NULL
+ORDER BY ordered desc
+LIMIT 3;
+
 #Trigger 1
 #Decrement ordered after deletion of an orderID
 DROP TRIGGER IF EXISTS DecrementOrderTrigger;
@@ -119,14 +128,19 @@ BEGIN
 END; //
 delimiter ;
 
-#Procedure 1
-#View open tables
-DROP PROCEDURE IF EXISTS GetAllOpenTables;
+#Procedure 1: Outerjoin, total price of the order
+DROP PROCEDURE IF EXISTS GetOrderTotal;
 DELIMITER //
-CREATE PROCEDURE GetAllOpenTables()
+CREATE PROCEDURE GetOrderTotal()
 BEGIN
-	SELECT tableID
-    FROM Tables
-    WHERE people = 0; # 0 people mean that the table is free
+	SELECT Round(SUM(price),2)
+	FROM orders
+	LEFT JOIN foods ON orders.foodID = foods.foodID
+	WHERE orderID = ?
+	UNION
+	SELECT Round(SUM(price),2)
+	FROM orders
+	RIGHT JOIN foods ON orders.foodID = foods.foodID
+	WHERE orderID = ?;
 END; //
 DELIMITER ; 
