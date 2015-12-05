@@ -639,13 +639,13 @@ public class Restaurant
 			return list;
 		}
 	}
-/*
+	
 	public JTable sortByCategories()
 	{
 		JTable list = new JTable();
 		try
 		{
-			this.statement = this.connection.prepareStatement("");
+			this.statement = this.connection.prepareStatement("SELECT * FROM foods ORDER BY category");
 			this.resultSet = this.statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int c = rsmd.getColumnCount();
@@ -672,7 +672,6 @@ public class Restaurant
 			return list;
 		}
 	}
-*/
 
 	public JTable priceLessThan(double price)
 	{

@@ -282,12 +282,12 @@ public class Controller extends JPanel
 					}
 				});
 				// sort by categories
-				JButton sByCategories = new JButton("Sort By Categories");
+				JButton sByCategories = new JButton("Search By Categories");
 				sByCategories.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFrame frame = new JFrame(); 
-						// frame.add(new JScrollPane(restaurant.sortByCategories()));
+						frame.add(new JScrollPane(restaurant.sortByCategories()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
 						
