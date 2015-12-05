@@ -1,6 +1,3 @@
-#orderid's not a primary key or make orderid a fk of userid
-#implement cascading policy
-#intersection shows 
 USE reserveme;
 
 DROP TABLE IF EXISTS reservations;
@@ -8,10 +5,9 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS foods;
 DROP TABLE IF EXISTS tables;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS archived_reservations;
 
 
-CREATE TABLE users 
+CREATE TABLE users
     (
         userID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(30),
@@ -21,6 +17,7 @@ CREATE TABLE users
     );
 
 INSERT INTO users (userID, name, uname, pw, usertype) VALUES(101,'Chiu', 'chiu', 'qweasdzxc', 1);
+INSERT INTO users (userID, name, uname, pw, usertype) VALUES(111,'David', 'kgb', 'qweasdzxc', 1);
 INSERT INTO users (userID, name, uname, pw, usertype) VALUES(102,'Bernie Sanders', 'burn', 'qweasdzxc', 0);
 INSERT INTO users (userID, name, uname, pw, usertype) VALUES(103,'George Bush', 'JB', 'qweasdzxc', 0);
 INSERT INTO users (userID, name, uname, pw, usertype) VALUES(104,'Barry Obama', 'OG', 'qweasdzxc', 0);
@@ -66,7 +63,7 @@ CREATE TABLE foods
     );
 
 INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (101,'Pot Sticker(6)','Appetizer',5.95,20);
-INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (102,'Spring Rolls(3)','Appetizer',3.95,20);
+INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (102,'Spring Rolls(3)','Appetizer',3.95,22);
 INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (103,'Hot and Sour Soup','Soup',6.95,10);
 INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (104,'Mongolian Beef','Beef',9.95,30);
 INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (105,'Beer With Broccoli','Beef',8.95,40);
@@ -79,17 +76,19 @@ INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (111,'Pepsi','N
 INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (112,'Bud Light','Alcoholic Drink',4.5,20);
 INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (113,'Heineken','Alcoholic Drink',4.5,20);
 
-
-CREATE TABLE orders 
+CREATE TABLE orders
     (
-        orderID INTEGER NOT NULL, 
+        orderID INTEGER,
         userID INTEGER,
         foodID INTEGER,
         processed BOOLEAN,
         FOREIGN KEY (userID) REFERENCES users(userID),
-        FOREIGN KEY (foodID) REFERENCES foods(foodID)     
+        FOREIGN KEY (foodID) REFERENCES foods(foodID)
     );
 
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(2,102,102, true);
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(3,103,103, true);
@@ -105,7 +104,7 @@ INSERT INTO orders (orderID, userID, foodID, processed) VALUES(10,110,110, true)
 CREATE TABLE reservations
     (
         reservationID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        userID INTEGER, 
+        userID INTEGER,
         tableID INTEGER,
         orderID INTEGER,
         people INTEGER,
@@ -115,21 +114,78 @@ CREATE TABLE reservations
         FOREIGN KEY (tableID) REFERENCES tables(tableID)
     );
 
-INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
-VALUES(1, 103, 3, 10, 4, '11-11-2015 18:30:00', '11-11-2015 18:30:00');
-INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
-VALUES(2, 103, 3, 10, 4, '10-10-2015 18:30:00', '11-11-2015 18:30:00');
 
-#CREATE TABLE archivedreservations
-#    (
-#        id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-#        reservationID INTEGER,
-#        userID INTEGER, 
-#        tableID INTEGER,
-#        orderID INTEGER,
-#        people INTEGER,
-#        resDate DATETIME,
-#        updatedAt DATETIME,
-#    ) ENGINE=ARCHIVE;
+INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(1, 103, 3, 10, 4, '2015-11-11 18:30:00', '2015-11-11 18:30:00');
 
-QUIT
+
+DROP TRIGGER IF EXISTS DecrementOrderTrigger;
+delimiter //
+CREATE TRIGGER DecrementOrderTrigger
+AFTER DELETE ON orders FOR EACH ROW
+BEGIN
+	UPDATE Foods
+    SET ordered = ordered - 1
+    WHERE Old.foodID = foods.foodID;
+END; //
+delimiter ;
+
+
+DROP TRIGGER IF EXISTS IncrementOrderTrigger;
+delimiter //
+CREATE TRIGGER IncrementOrderTrigger
+AFTER INSERT ON orders FOR EACH ROW
+BEGIN
+	UPDATE Foods
+    SET ordered = ordered + 1
+    WHERE New.foodID = foods.foodID;
+END; //
+delimiter ;
+
+
+
+#SELECT * FROM users;
+/*
+#Will give the chepeast items for all categories
+SELECT foodID, dishName, category, price
+FROM foods AS lessThan
+WHERE price <= (
+	SELECT AVG(Price)
+    FROM foods
+    WHERE category = lessThan.category); */
+
+/*
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(11,101,101, true);
+DELETE FROM orders WHERE orderID = 11;
+
+#SELECT foodID, ordered FROM foods;
+#SELECT * FROM orders WHERE orderID = 11; */
+
+
+
+#Top 3 most popular food, food is considered popular if greater than 20
+SELECT foodID,dishName,category,price
+FROM foods
+GROUP BY ordered
+HAVING ordered IS NOT NULL
+ORDER BY ordered desc
+LIMIT 3;
+
+
+/*
+#Procedure 1: Outerjoin, total price of the order
+DROP PROCEDURE IF EXISTS GetOrderTotal;
+DELIMITER //
+CREATE PROCEDURE GetOrderTotal()
+BEGIN
+	SELECT Round(SUM(price),2)
+	FROM orders
+	LEFT JOIN foods ON orders.foodID = foods.foodID
+	WHERE orderID = ?
+	UNION
+	SELECT Round(SUM(price),2)
+	FROM orders
+	RIGHT JOIN foods ON orders.foodID = foods.foodID
+	WHERE orderID = ?;
+END; //
+DELIMITER ; */
