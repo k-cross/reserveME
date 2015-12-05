@@ -124,7 +124,7 @@ delimiter //
 CREATE TRIGGER DecrementOrderTrigger
 AFTER DELETE ON orders FOR EACH ROW
 BEGIN
-	UPDATE Foods
+    UPDATE Foods
     SET ordered = ordered - 1
     WHERE Old.foodID = foods.foodID;
 END; //
@@ -136,56 +136,19 @@ delimiter //
 CREATE TRIGGER IncrementOrderTrigger
 AFTER INSERT ON orders FOR EACH ROW
 BEGIN
-	UPDATE Foods
+    UPDATE Foods
     SET ordered = ordered + 1
     WHERE New.foodID = foods.foodID;
 END; //
 delimiter ;
 
-
-
-#SELECT * FROM users;
-/*
-#Will give the chepeast items for all categories
-SELECT foodID, dishName, category, price
-FROM foods AS lessThan
-WHERE price <= (
-	SELECT AVG(Price)
-    FROM foods
-    WHERE category = lessThan.category); */
-
-/*
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(11,101,101, true);
-DELETE FROM orders WHERE orderID = 11;
-
-#SELECT foodID, ordered FROM foods;
-#SELECT * FROM orders WHERE orderID = 11; */
-
-
-
-#Top 3 most popular food, food is considered popular if greater than 20
-SELECT foodID,dishName,category,price
-FROM foods
-GROUP BY ordered
-HAVING ordered IS NOT NULL
-ORDER BY ordered desc
-LIMIT 3;
-
-
-/*
-#Procedure 1: Outerjoin, total price of the order
-DROP PROCEDURE IF EXISTS GetOrderTotal;
-DELIMITER //
-CREATE PROCEDURE GetOrderTotal()
+DROP TRIGGER IF EXISTS UpdateOrderTrigger;
+delimiter //
+CREATE TRIGGER UpdateOrderTrigger
+AFTER Update ON orders FOR EACH ROW 
 BEGIN
-	SELECT Round(SUM(price),2)
-	FROM orders
-	LEFT JOIN foods ON orders.foodID = foods.foodID
-	WHERE orderID = ?
-	UNION
-	SELECT Round(SUM(price),2)
-	FROM orders
-	RIGHT JOIN foods ON orders.foodID = foods.foodID
-	WHERE orderID = ?;
+	UPDATE Foods
+	SET ordered = ordered + 1
+	WHERE New.foodID = foods.foodID;
 END; //
-DELIMITER ; */
+delimiter ; 
