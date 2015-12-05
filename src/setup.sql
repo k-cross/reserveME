@@ -1,3 +1,6 @@
+#orderid's not a primary key or make orderid a fk of userid
+#implement cascading policy
+#intersection shows 
 USE reserveme;
 
 DROP TABLE IF EXISTS reservations;
@@ -5,6 +8,7 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS foods;
 DROP TABLE IF EXISTS tables;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS archived_reservations;
 
 
 CREATE TABLE users 
@@ -78,7 +82,7 @@ INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (113,'Heineken'
 
 CREATE TABLE orders 
     (
-        orderID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+        orderID INTEGER NOT NULL, 
         userID INTEGER,
         foodID INTEGER,
         processed BOOLEAN,
@@ -108,11 +112,24 @@ CREATE TABLE reservations
         resDate DATETIME,
         updatedAt DATETIME,
         FOREIGN KEY (userID) REFERENCES users(userID),
-        FOREIGN KEY (tableID) REFERENCES tables(tableID),
-        FOREIGN KEY (orderID) REFERENCES orders(orderID)
+        FOREIGN KEY (tableID) REFERENCES tables(tableID)
     );
 
 INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
 VALUES(1, 103, 3, 10, 4, '11-11-2015 18:30:00', '11-11-2015 18:30:00');
+INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(2, 103, 3, 10, 4, '10-10-2015 18:30:00', '11-11-2015 18:30:00');
+
+#CREATE TABLE archivedreservations
+#    (
+#        id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+#        reservationID INTEGER,
+#        userID INTEGER, 
+#        tableID INTEGER,
+#        orderID INTEGER,
+#        people INTEGER,
+#        resDate DATETIME,
+#        updatedAt DATETIME,
+#    ) ENGINE=ARCHIVE;
 
 QUIT
