@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS reserveme;
+CREATE DATABASE reserveme;
 USE reserveme;
 
 DROP TABLE IF EXISTS reservations;
@@ -145,10 +147,13 @@ delimiter ;
 DROP TRIGGER IF EXISTS UpdateOrderTrigger;
 delimiter //
 CREATE TRIGGER UpdateOrderTrigger
-AFTER Update ON orders FOR EACH ROW 
+AFTER Update ON orders FOR EACH ROW
 BEGIN
+  UPDATE Foods
+  SET ordered = ordered - 1
+  WHERE Old.foodID = foods.foodID;
 	UPDATE Foods
 	SET ordered = ordered + 1
 	WHERE New.foodID = foods.foodID;
 END; //
-delimiter ; 
+delimiter ;
