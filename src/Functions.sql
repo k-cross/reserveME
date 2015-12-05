@@ -102,6 +102,13 @@ HAVING ordered IS NOT NULL
 ORDER BY ordered desc
 LIMIT 3;
 
+#17
+#Interesction
+#Get the name of the customer for each order.
+SELECT orderID, Name, foodID, processed
+FROM Orders
+INNER JOIN Users u1 on u1.userID = orders.userID;
+
 #Trigger 1
 #Decrement ordered after deletion of an orderID
 DROP TRIGGER IF EXISTS DecrementOrderTrigger;
