@@ -31,7 +31,7 @@ WHERE userID= ?;
 #Update reservation
 #Prepared Statement
 UPDATE Reservations
-SET resDate= '2015-11-11 18:30:00' 
+SET resDate= '2015-11-11 18:30:00'
 WHERE userID= ?;
 
 #7
@@ -49,11 +49,11 @@ WHERE orderID= ?;
 #Update order
 #Prepared Statement
 UPDATE Orders
-SET foodID= 'Beer With Broccoli' 
+SET foodID= ?
 WHERE orderID= ?;
 
 #10
-# Sort the menu with price in decreasing or increasing order 
+# Sort the menu with price in decreasing or increasing order
 SELECT foodID, dishname, category, price
 FROM Foods
 ORDER BY Price; #DESC or ASC(default)
@@ -71,7 +71,7 @@ FROM Foods
 ORDER BY dishName;
 
 #13
-#Sort menu by price < or > price specified by the user 
+#Sort menu by price < or > price specified by the user
 #Prepared Statement
 SELECT foodID, dishName, category, price
 FROM Foods
@@ -80,7 +80,7 @@ WHERE price > ?; #WHERE price < ?
 #14
 #Correlated Subquery
 #Will give the chepeast items for all categories
-SELECT foodID, dishName, category, price 
+SELECT foodID, dishName, category, price
 FROM foods AS lessThan
 WHERE price <= (
 	SELECT AVG(Price)
@@ -107,7 +107,7 @@ LIMIT 3;
 DROP TRIGGER IF EXISTS DecrementOrderTrigger;
 delimiter //
 CREATE TRIGGER DecrementOrderTrigger
-AFTER DELETE ON orders FOR EACH ROW 
+AFTER DELETE ON orders FOR EACH ROW
 BEGIN
 	UPDATE Foods
     SET ordered = ordered - 1
@@ -120,7 +120,7 @@ delimiter ;
 DROP TRIGGER IF EXISTS IncrementOrderTrigger;
 delimiter //
 CREATE TRIGGER IncrementOrderTrigger
-AFTER INSERT ON orders FOR EACH ROW 
+AFTER INSERT ON orders FOR EACH ROW
 BEGIN
 	UPDATE Foods
     SET ordered = ordered + 1
@@ -143,4 +143,4 @@ BEGIN
 	RIGHT JOIN foods ON orders.foodID = foods.foodID
 	WHERE orderID = ?;
 END; //
-DELIMITER ; 
+DELIMITER ;

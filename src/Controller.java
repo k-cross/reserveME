@@ -33,7 +33,6 @@ public class Controller extends JPanel
 						frame.add(new JScrollPane(restaurant.listOrders()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						frame.setVisible(true);
 					}
 				});
@@ -95,7 +94,7 @@ public class Controller extends JPanel
 						frame.add(new JScrollPane(restaurant.listTables()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -108,7 +107,7 @@ public class Controller extends JPanel
 						frame.add(new JScrollPane(restaurant.listReservations()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -166,6 +165,7 @@ public class Controller extends JPanel
 							JOptionPane.showMessageDialog(null, String.format("All inputs could not be empty!"));
 					}
 				});
+				
 				JButton findUser = new JButton("Find User");
 				
 				
@@ -207,7 +207,7 @@ public class Controller extends JPanel
 				this.add(order);
 				this.add(addOrder);
 				this.add(deleteOrder);
-				// this.add(updateOrder);
+				this.add(updateOrder);
 				this.add(table);
 				this.add(reservations);
 				this.add(addReservations);
@@ -251,7 +251,7 @@ public class Controller extends JPanel
 						frame.add(new JScrollPane(restaurant.listTables()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -264,7 +264,7 @@ public class Controller extends JPanel
 						frame.add(new JScrollPane(restaurant.listReservations()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -284,7 +284,7 @@ public class Controller extends JPanel
 						frame.add(new JScrollPane(restaurant.sortByName()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -294,10 +294,10 @@ public class Controller extends JPanel
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFrame frame = new JFrame(); 
-						frame.add(new JScrollPane(restaurant.sortByPrice(0)));
+						frame.add(new JScrollPane(restaurant.sortByPrice(1)));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -307,10 +307,10 @@ public class Controller extends JPanel
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFrame frame = new JFrame(); 
-						frame.add(new JScrollPane(restaurant.sortByPrice(1)));
+						frame.add(new JScrollPane(restaurant.sortByPrice(0)));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -323,7 +323,7 @@ public class Controller extends JPanel
 						// frame.add(new JScrollPane(restaurant.sortByCategories()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
 						frame.setVisible(true);
 					}
 				});
@@ -339,7 +339,7 @@ public class Controller extends JPanel
 							frame.add(new JScrollPane(restaurant.priceLessThan(input)));
 							frame.setSize(500, 300); 
 							frame.setLocationRelativeTo(null); 
-							frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							
 							frame.setVisible(true);
 						}
 						else
@@ -358,7 +358,7 @@ public class Controller extends JPanel
 							frame.add(new JScrollPane(restaurant.priceGreaterThan(input)));
 							frame.setSize(500, 300); 
 							frame.setLocationRelativeTo(null); 
-							frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							
 							frame.setVisible(true);
 						}
 						else
@@ -374,7 +374,7 @@ public class Controller extends JPanel
 							frame.add(new JScrollPane(restaurant.cheapestItems()));
 							frame.setSize(500, 300); 
 							frame.setLocationRelativeTo(null); 
-							frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							
 							frame.setVisible(true);
 					}
 				});
@@ -388,7 +388,7 @@ public class Controller extends JPanel
 							frame.add(new JScrollPane(restaurant.mostPopular()));
 							frame.setSize(500, 300); 
 							frame.setLocationRelativeTo(null); 
-							frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							
 							frame.setVisible(true);
 					}
 				});

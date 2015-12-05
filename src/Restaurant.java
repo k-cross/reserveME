@@ -256,10 +256,12 @@ public class Restaurant
 			this.statement.setInt(1, userID);
 			this.statement.setInt(2, foodID);
 			this.statement.executeUpdate();
+			message = "The order has been added!";
 			return true;
 		}
 		catch(Exception e)
 		{
+			message = "Fail to add the order!";
 			return false;
 		}
 	}
@@ -424,11 +426,12 @@ public class Restaurant
 				column.add(rsmd.getColumnName(i));
 			}
 			Vector data = new Vector();
-			Vector row = new Vector();
+			Vector<String> row = new Vector<String>();
 			while(resultSet.next())
 			{
 				row = new Vector(c);
 				for(int i = 1; i <= c; i++){
+					System.out.println(resultSet.getString(i));
 					row.add(resultSet.getString(i));
 				}
 				data.add(row);
@@ -452,6 +455,7 @@ public class Restaurant
 			this.statement.setInt(3, people);
 			this.statement.setString(4, resDate);
 			this.statement.executeUpdate();
+			
 			return true;
 		}
 		catch(Exception e)
@@ -508,7 +512,7 @@ public class Restaurant
 				this.statement.setString(1, resDate);
 				this.statement.setInt(2, userID);
 				this.statement.executeUpdate();
-				this.statement = this.connection.prepareStatement("SELECT * FROM reservations WHERE userID=? AND pw=?");
+				this.statement = this.connection.prepareStatement("SELECT * FROM reservations WHERE userID=? AND resDate=?");
 				this.statement.setInt(1, userID);
 				this.statement.setString(2, resDate);
 				this.resultSet = this.statement.executeQuery();
@@ -574,7 +578,10 @@ public class Restaurant
 		JTable list = new JTable();
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT foodID, dishname, category, price from Foods ORDER BY Price");
+			if(choice == 1)
+				this.statement = this.connection.prepareStatement("SELECT foodID, dishname, category, price from Foods ORDER BY Price DESC");
+			else
+				this.statement = this.connection.prepareStatement("SELECT foodID, dishname, category, price from Foods ORDER BY Price ASC");
 			this.resultSet = this.statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int c = rsmd.getColumnCount();
