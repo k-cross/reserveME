@@ -128,6 +128,19 @@ BEGIN
 END; //
 delimiter ;
 
+#Trigger 3
+#Increment ordered after update on order with a new foodID
+DROP TRIGGER IF EXISTS UpdateOrderTrigger;
+delimiter //
+CREATE TRIGGER UpdateOrderTrigger
+AFTER Update ON orders FOR EACH ROW 
+BEGIN
+		UPDATE Foods
+		SET ordered = ordered + 1
+		WHERE New.foodID = foods.foodID;
+END; //
+delimiter ; 
+
 #Procedure 1: Outerjoin, total price of the order
 DROP PROCEDURE IF EXISTS GetOrderTotal;
 DELIMITER //
