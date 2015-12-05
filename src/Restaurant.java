@@ -101,7 +101,7 @@ public class Restaurant
 	
 
 	// functions
-	public boolean insertUser(String name, String userName, String password, String userType)
+	public boolean insertUser(String name, String userName, String password, int usertype)
 	{
 		try
 		{
@@ -119,7 +119,7 @@ public class Restaurant
 				this.statement.setString(1, name);
 				this.statement.setString(2, userName);
 				this.statement.setString(3, password);
-				this.statement.setString(4, userType);
+				this.statement.setInt(4, usertype);
 				this.statement.executeUpdate();
 				this.statement = this.connection.prepareStatement("SELECT uname FROM users WHERE uname=?");
 				this.statement.setString(1, userName);
@@ -381,7 +381,7 @@ public class Restaurant
 		JTable list = new JTable();
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT * FROM tables where people <= 0");
+			this.statement = this.connection.prepareStatement("SELECT * FROM tables where people=0");
 			this.resultSet = this.statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int c = rsmd.getColumnCount();
@@ -431,8 +431,7 @@ public class Restaurant
 			{
 				row = new Vector(c);
 				for(int i = 1; i <= c; i++){
-					System.out.println(resultSet.getString(i));
-					row.add(resultSet.getString(i));
+					row.add((String)resultSet.getString(i));
 				}
 				data.add(row);
 			}
@@ -537,6 +536,38 @@ public class Restaurant
 		{
 			message = "Fail to update the reservation!";
 			return false;
+		}
+	}
+	public JTable listUsers()
+	{
+		JTable list = new JTable();
+		try
+		{
+			this.statement = this.connection.prepareStatement("SELECT * FROM users");
+			this.resultSet = this.statement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int c = rsmd.getColumnCount();
+			Vector column = new Vector(c);
+			for(int i = 1; i <= c; i++)
+			{
+				column.add(rsmd.getColumnName(i));
+			}
+			Vector data = new Vector();
+			Vector row = new Vector();
+			while(resultSet.next())
+			{
+				row = new Vector(c);
+				for(int i = 1; i <= c; i++){
+					row.add(resultSet.getString(i));
+				}
+				data.add(row);
+			}
+			list = new JTable(data,column);
+			return list;
+		}
+		catch(Exception e)
+		{
+			return list;
 		}
 	}
 	

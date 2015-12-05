@@ -21,17 +21,22 @@ public class mainMenu extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				String user = JOptionPane.showInputDialog("Enter your username: ");
 				String password = JOptionPane.showInputDialog("Enter your password: ");
-				if(restaurant.userLogin(user, password))
+				if(!user.isEmpty() || !user.equals("") || !password.isEmpty() || !password.equals(""))
 				{
-					new Window(restaurant);
+					if(restaurant.userLogin(user, password))
+					{
+						new Window(restaurant);
+					}
+					else
+					{
+						if(restaurant.findUser())
+							JOptionPane.showMessageDialog(null, String.format("User not Found!"));
+						else if (restaurant.checkPW())
+							JOptionPane.showMessageDialog(null, String.format("Invaild Password!"));
+					}
 				}
 				else
-				{
-					if(restaurant.findUser())
-						JOptionPane.showMessageDialog(null, String.format("User not Found!"));
-					else if (restaurant.checkPW())
-						JOptionPane.showMessageDialog(null, String.format("Invaild Password!"));
-				}
+					JOptionPane.showMessageDialog(null, String.format("All inputs could not be empty!"));
 			}
 		});
 		JButton signUp = new JButton("Sign-Up");
@@ -44,7 +49,7 @@ public class mainMenu extends JFrame
 				String rePassword = JOptionPane.showInputDialog("Re-Enter your password: ");
 				if(password.equals(rePassword))
 				{
-					if(restaurant.insertUser(name, user, password, "customer"))
+					if(restaurant.insertUser(name, user, password, 0))
 						JOptionPane.showMessageDialog(null, String.format("Your account has been created!\nName: %s\nUsername: %s\nPassword: %s", name, user, password));
 					else
 						JOptionPane.showMessageDialog(null, String.format("Fail to create the account"));
@@ -75,15 +80,5 @@ public class mainMenu extends JFrame
 	public void closeFrame()
 	{
 		super.dispose();
-	}
-	
-	public void hideFrame()
-	{
-		super.hide();
-	}
-	
-	public void showFrame()
-	{
-		super.show();
 	}
 }

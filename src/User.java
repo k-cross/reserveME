@@ -28,6 +28,10 @@ public class User
 	{
 		return this.type;
 	}
+	public String getName()
+	{
+		return this.name;
+	}
 	
 	// toString
 	public String toString()

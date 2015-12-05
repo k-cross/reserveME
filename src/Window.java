@@ -13,7 +13,7 @@ public class Window extends JFrame
 	{
 		this.restaurant = restaurant;
 		this.controller = new Controller(this.restaurant);
-		this.setTitle(this.restaurant.getUser().getType() + " | Dashboard");
+		this.setTitle((((this.restaurant.getUser().getType().equals("1")) ? "Manager":this.restaurant.getUser().getName()) + " | Dashboard"));
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setLocation(100, 100);
 		this.setSize(300,600);

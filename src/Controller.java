@@ -24,7 +24,7 @@ public class Controller extends JPanel
 
 		switch(restaurant.getUser().getType())
 		{
-			case "manager":
+			case "1":
 				JButton order = new JButton("List of Orders");
 				order.addActionListener(new ActionListener(){
 					@Override
@@ -118,7 +118,7 @@ public class Controller extends JPanel
 						int userID = Integer.parseInt(JOptionPane.showInputDialog("Enter the userID: "));
 						int tableID = Integer.parseInt(JOptionPane.showInputDialog("Enter the tableID: "));
 						int people = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of people: "));
-						String resDate = JOptionPane.showInputDialog("Enter the resDate YYYY-MM-DD hh:mm: ");
+						String resDate = JOptionPane.showInputDialog("Enter the resDate YYYY-MM-DD hh:mm ");
 						if(userID >= 0 && tableID >= 0 && people >= 0 && !resDate.isEmpty())
 						{
 							if(restaurant.addReservations(userID, tableID, people, resDate))
@@ -166,10 +166,20 @@ public class Controller extends JPanel
 					}
 				});
 				
-				JButton findUser = new JButton("Find User");
+				JButton listUser = new JButton("List of User");
+				listUser.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JFrame frame = new JFrame(); 
+						frame.add(new JScrollPane(restaurant.listUsers()));
+						frame.setSize(500, 300); 
+						frame.setLocationRelativeTo(null); 
+						frame.setVisible(true);
+							
+					}
+				});
 				
-				
-				JButton add = new JButton("Add Staff");
+				JButton add = new JButton("Add User");
 				add.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -179,7 +189,7 @@ public class Controller extends JPanel
 						String rePassword = JOptionPane.showInputDialog("Re-Enter the password: ");
 						if(password.equals(rePassword))
 						{
-							if(restaurant.insertUser(name, user, password, "staff"))
+							if(restaurant.insertUser(name, user, password, 0))
 								JOptionPane.showMessageDialog(null, String.format("The account has been created!\nName: %s\nUsername: %s\nPassword: %s", name, user, password));
 							else
 								JOptionPane.showMessageDialog(null, String.format("Fail to create the account"));
@@ -189,7 +199,7 @@ public class Controller extends JPanel
 							
 					}
 				});
-				JButton delete = new JButton("Detele Staff");
+				JButton delete = new JButton("Detele User");
 				delete.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -204,77 +214,34 @@ public class Controller extends JPanel
 							
 					}
 				});
-				this.add(order);
-				this.add(addOrder);
-				this.add(deleteOrder);
-				this.add(updateOrder);
-				this.add(table);
-				this.add(reservations);
-				this.add(addReservations);
-				this.add(deleteReservations);
-				this.add(updateReservations);
-				this.add(findUser);
-				this.add(add);
-				this.add(delete);
-				break;
-			case "staff":
-				order = new JButton("List of Orders");
-				order.addActionListener(new ActionListener(){
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						JFrame frame = new JFrame(); 
-						frame.add(new JScrollPane(restaurant.listOrders()));
-						frame.setSize(500, 300); 
-						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						frame.setVisible(true);
-					}
-				});
-				table = new JButton("List of Tables");
-				table.addActionListener(new ActionListener(){
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						JFrame frame = new JFrame(); 
-						frame.add(new JScrollPane(restaurant.listTables()));
-						frame.setSize(500, 300); 
-						frame.setLocationRelativeTo(null); 
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						frame.setVisible(true);
-					}
-				});
-				
 				JButton Otable = new JButton("List of Open Table");
 				Otable.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFrame frame = new JFrame(); 
-						frame.add(new JScrollPane(restaurant.listTables()));
+						frame.add(new JScrollPane(restaurant.listOpenTables()));
 						frame.setSize(500, 300); 
 						frame.setLocationRelativeTo(null); 
 						
 						frame.setVisible(true);
 					}
 				});
-				
-				reservations = new JButton("List of Reservations");
-				reservations.addActionListener(new ActionListener(){
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						JFrame frame = new JFrame(); 
-						frame.add(new JScrollPane(restaurant.listReservations()));
-						frame.setSize(500, 300); 
-						frame.setLocationRelativeTo(null); 
-						
-						frame.setVisible(true);
-					}
-				});
-				
+
 				this.add(order);
+				this.add(addOrder);
+				this.add(deleteOrder);
+				this.add(updateOrder);
 				this.add(table);
 				this.add(Otable);
 				this.add(reservations);
+				this.add(addReservations);
+				this.add(deleteReservations);
+				this.add(updateReservations);
+				this.add(listUser);
+				this.add(add);
+				this.add(delete);
 				break;
-			case "customer":
+			case "0":
 				// sort the menu by name in alphabet order
 				JButton sByName = new JButton("Sort By Name");
 				sByName.addActionListener(new ActionListener(){
