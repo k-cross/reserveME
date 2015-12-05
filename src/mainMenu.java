@@ -23,7 +23,7 @@ public class mainMenu extends JFrame
 				String password = JOptionPane.showInputDialog("Enter your password: ");
 				if(restaurant.userLogin(user, password))
 				{
-					new Controller(restaurant);
+					new Window(restaurant);
 				}
 				else
 				{
