@@ -12,11 +12,12 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users
     (
-        userID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        userID INTEGER NOT NULL AUTO_INCREMENT,
         name VARCHAR(30),
         uname VARCHAR(50) UNIQUE,
         pw VARCHAR(50),
-        usertype INTEGER NOT NULL
+        usertype INTEGER NOT NULL,
+        PRIMARY KEY (userID) 
     );
 
 INSERT INTO users (userID, name, uname, pw, usertype) VALUES(101,'Chiu', 'chiu', 'qweasdzxc', 1);
@@ -85,8 +86,12 @@ CREATE TABLE orders
         userID INTEGER,
         foodID INTEGER,
         processed BOOLEAN,
-        FOREIGN KEY (userID) REFERENCES users(userID),
-        FOREIGN KEY (foodID) REFERENCES foods(foodID)
+        FOREIGN KEY (userID) REFERENCES users(userID) 
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+        FOREIGN KEY (foodID) REFERENCES foods(foodID) 
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
     );
 
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,102, true);
@@ -113,9 +118,13 @@ CREATE TABLE reservations
         people INTEGER,
         resDate DATETIME,
         updatedAt DATETIME,
-        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (userID) REFERENCES users(userID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
         FOREIGN KEY (tableID) REFERENCES tables(tableID)
-    );
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+   );
 
 
 INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
