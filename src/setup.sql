@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS reserveme;
 CREATE DATABASE reserveme;
 USE reserveme;
+GRANT ALL ON reserveme.* TO 'cs157abnb'@'localhost';
 
 DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS orders;
@@ -117,8 +118,10 @@ CREATE TABLE reservations
     );
 
 
-INSERT INTO reservations (reservationID, userID, tableID, orderID, people, resDate, updatedAt)
-VALUES(1, 103, 3, 10, 4, '2015-11-11 18:30:00', '2015-11-11 18:30:00');
+INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(103, 3, 10, 4, '2015-11-11 18:30:00', '2015-11-11 18:30:00');
+INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(102, 3, 10, 4, '2015-10-10 18:30:00', '2015-10-10 18:30:00');
 
 
 DROP TRIGGER IF EXISTS DecrementOrderTrigger;
