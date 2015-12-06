@@ -89,10 +89,10 @@ CREATE TABLE orders
         FOREIGN KEY (foodID) REFERENCES foods(foodID)
     );
 
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,101,101, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,102, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,101, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,103, true);
+INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,102,104, true);
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(2,102,102, true);
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(3,103,103, true);
 INSERT INTO orders (orderID, userID, foodID, processed) VALUES(4,104,104, true);
@@ -160,3 +160,19 @@ BEGIN
 	WHERE New.foodID = foods.foodID;
 END; //
 delimiter ;
+
+DROP PROCEDURE IF EXISTS GetOrderTotal;
+DELIMITER //
+CREATE PROCEDURE GetOrderTotal(IN uID INT)
+BEGIN
+	SELECT Round(SUM(price),2)
+	FROM orders
+	LEFT JOIN foods ON orders.foodID = foods.foodID
+	WHERE userID = uID
+	UNION
+	SELECT Round(SUM(price),2)
+	FROM orders
+	RIGHT JOIN foods ON orders.foodID = foods.foodID
+	WHERE userID = uID;
+END; //
+DELIMITER ;
