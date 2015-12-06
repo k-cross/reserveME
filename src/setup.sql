@@ -82,7 +82,7 @@ INSERT INTO foods(foodID,dishName,category,price,ordered) VALUES (113,'Heineken'
 
 CREATE TABLE orders
     (
-        orderID INTEGER,
+        orderID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
         userID INTEGER,
         foodID INTEGER,
         processed BOOLEAN,
@@ -94,19 +94,19 @@ CREATE TABLE orders
         ON UPDATE CASCADE
     );
 
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,102, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,101, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,108,103, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(1,102,104, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(2,102,102, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(3,103,103, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(4,104,104, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(5,105,105, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(6,106,106, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(7,107,107, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(8,108,108, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(9,109,109, true);
-INSERT INTO orders (orderID, userID, foodID, processed) VALUES(10,110,110, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(108,102, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(108,101, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(108,103, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(102,104, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(102,102, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(103,103, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(104,104, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(105,105, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(106,106, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(107,107, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(108,108, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(109,109, true);
+INSERT INTO orders (userID, foodID, processed) VALUES(110,110, true);
 
 
 CREATE TABLE reservations
