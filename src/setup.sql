@@ -128,9 +128,17 @@ CREATE TABLE reservations
 
 
 INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
-VALUES(103, 3, 10, 4, '2015-11-11 18:30:00', '2015-11-11 18:30:00');
+VALUES(103, 3, 3, 4, '2015-11-11 18:30:00', '2015-11-11 18:30:00');
 INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
-VALUES(102, 3, 10, 4, '2015-10-10 18:30:00', '2015-10-10 18:30:00');
+VALUES(102, 4, 4, 3, '2015-27-10 12:30:00', '2015-27-10 13:30:00');
+INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(105, 5, 5, 5, '2015-11-17 21:00:00', '2015-11-17 22:00:00');
+INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(106, 7, 7, 6, '2015-11-7 11:00:00', '2015-11-7 12:00:00');
+INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(109, 11, 11, 6, '2015-12-24 16:15:00', '2015-12-24 17:15:00');
+INSERT INTO reservations (userID, tableID, orderID, people, resDate, updatedAt)
+VALUES(104, 10, 10, 2, '2015-12-25 13:45:00', '2015-12-25 14:45:00');
 
 
 DROP TRIGGER IF EXISTS DecrementOrderTrigger;
