@@ -395,6 +395,18 @@ public class Controller extends JPanel
 							
 					}
 				});
+				order = new JButton("List of Orders");
+				order.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JFrame frame = new JFrame(); 
+						frame.add(new JScrollPane(restaurant.userListOrders(restaurant.getUser().getUserID())));
+						frame.setSize(500, 300); 
+						frame.setLocationRelativeTo(null); 
+						frame.setVisible(true);
+						JOptionPane.showMessageDialog(null, String.format(restaurant.getMessage()));
+					}
+				});
 				
 				this.add(sByName);
 				this.add(sByPriceDec);
@@ -404,6 +416,7 @@ public class Controller extends JPanel
 				this.add(greaterPrice);
 				this.add(cheapestItems);
 				this.add(mostPopular);
+				this.add(order);
 				this.add(addOrder);
 				this.add(addReservations);
 				break;
