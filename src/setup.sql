@@ -41,20 +41,20 @@ CREATE TABLE tables
 
 INSERT INTO tables (tableID, people) VALUES(1,0);
 INSERT INTO tables (tableID, people) VALUES(2,1);
-INSERT INTO tables (tableID, people) VALUES(3,2);
-INSERT INTO tables (tableID, people) VALUES(4,3);
+INSERT INTO tables (tableID, people) VALUES(3,0);
+INSERT INTO tables (tableID, people) VALUES(4,4);
 INSERT INTO tables (tableID, people) VALUES(5,4);
 INSERT INTO tables (tableID, people) VALUES(6,5);
-INSERT INTO tables (tableID, people) VALUES(7,6);
-INSERT INTO tables (tableID, people) VALUES(8,7);
-INSERT INTO tables (tableID, people) VALUES(9,8);
-INSERT INTO tables (tableID, people) VALUES(10,9);
-INSERT INTO tables (tableID, people) VALUES(11,10);
-INSERT INTO tables (tableID, people) VALUES(12,11);
-INSERT INTO tables (tableID, people) VALUES(13,12);
-INSERT INTO tables (tableID, people) VALUES(14,13);
-INSERT INTO tables (tableID, people) VALUES(15,14);
-INSERT INTO tables (tableID, people) VALUES(16,15);
+INSERT INTO tables (tableID, people) VALUES(7,0);
+INSERT INTO tables (tableID, people) VALUES(8,2);
+INSERT INTO tables (tableID, people) VALUES(9,2);
+INSERT INTO tables (tableID, people) VALUES(10,3);
+INSERT INTO tables (tableID, people) VALUES(11,4);
+INSERT INTO tables (tableID, people) VALUES(12,6);
+INSERT INTO tables (tableID, people) VALUES(13,6);
+INSERT INTO tables (tableID, people) VALUES(14,2);
+INSERT INTO tables (tableID, people) VALUES(15,3);
+INSERT INTO tables (tableID, people) VALUES(16,5);
 
 
 CREATE TABLE foods
