@@ -154,16 +154,16 @@ delimiter ;
 #Procedure 1: Outerjoin, total price of the order
 DROP PROCEDURE IF EXISTS GetOrderTotal;
 DELIMITER //
-CREATE PROCEDURE GetOrderTotal()
+CREATE PROCEDURE GetOrderTotal(IN uID INT)
 BEGIN
 	SELECT Round(SUM(price),2)
 	FROM orders
 	LEFT JOIN foods ON orders.foodID = foods.foodID
-	WHERE orderID = ?
+	WHERE userID = uID
 	UNION
 	SELECT Round(SUM(price),2)
 	FROM orders
 	RIGHT JOIN foods ON orders.foodID = foods.foodID
-	WHERE orderID = ?;
+	WHERE userID = uID;
 END; //
 DELIMITER ;

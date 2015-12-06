@@ -4,12 +4,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -804,4 +806,50 @@ public class Restaurant
 			return list;
 		}
 	} 
+	
+	public JTable userListOrders(int userID)
+	{
+		JTable list = new JTable();
+		try
+		{
+			CallableStatement cs = null;
+			cs = this.connection.prepareCall("{CALL GetOrderTotal(?)}");
+			cs.setInt(1, userID);
+			this.resultSet = cs.executeQuery();
+			if(resultSet.next())
+			{
+				this.message = "The total sum is $" + resultSet.getString(1);
+			}
+			else
+			{
+				this.message = "Error";
+			}
+			this.statement = this.connection.prepareStatement("select orderID, userID, orders.foodID, dishname, category, price from orders join foods where userID=? AND orders.foodID=foods.foodID;");
+			this.statement.setInt(1, userID);
+			this.resultSet = this.statement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+			int c = rsmd.getColumnCount();
+			Vector column = new Vector(c);
+			for(int i = 1; i <= c; i++)
+			{
+				column.add(rsmd.getColumnName(i));
+			}
+			Vector data = new Vector();
+			Vector row = new Vector();
+			while(resultSet.next())
+			{
+				row = new Vector(c);
+				for(int i = 1; i <= c; i++){
+					row.add(resultSet.getString(i));
+				}
+				data.add(row);
+			}
+			list = new JTable(data,column);
+			return list;
+		}
+		catch(Exception e)
+		{
+			return list;
+		}
+	}
 }
