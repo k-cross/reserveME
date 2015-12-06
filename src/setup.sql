@@ -216,3 +216,17 @@ BEGIN
         WHERE (TO_DAYS(NOW()) - TO_DAYS(reserveme.reservations.updatedAt) > 30);
 END; //
 DELIMITER ;
+
+
+#Procedure 2: Archiving
+DROP PROCEDURE IF EXISTS UpdateArchive;
+DELIMITER //
+CREATE PROCEDURE UpdateArchive()
+BEGIN
+    INSERT INTO archiveDB.reservations 
+        SELECT * FROM reserveme.reservations
+        WHERE (TO_DAYS(NOW()) - TO_DAYS(reserveme.reservations.updatedAt) > 30);
+    DELETE FROM reserveme.reservations
+        WHERE (TO_DAYS(NOW()) - TO_DAYS(reserveme.reservations.updatedAt) > 30);
+END; //
+DELIMITER ;
