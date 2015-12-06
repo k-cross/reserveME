@@ -812,13 +812,13 @@ public class Restaurant
 		JTable list = new JTable();
 		try
 		{
-			CallableStatement cs = null;
-			cs = this.connection.prepareCall("{CALL GetOrderTotal(?)}");
-			cs.setInt(1, userID);
-			this.resultSet = cs.executeQuery();
+			this.statement = this.connection.prepareStatement("CALL GetOrderTotal(?)");
+			this.statement.setInt(1, userID);
+			this.resultSet = this.statement.executeQuery();
 			if(resultSet.next())
 			{
-				this.message = "The total sum is $" + resultSet.getString(1);
+				System.out.println("userID : " + userID);
+				this.message = "The total sum is $" + (String)resultSet.getString(1);
 			}
 			else
 			{
@@ -849,6 +849,7 @@ public class Restaurant
 		}
 		catch(Exception e)
 		{
+			this.message = "Error!";
 			return list;
 		}
 	}
