@@ -105,7 +105,7 @@ LIMIT 3;
 #17
 #Interesction
 #Get the name of the customer for each order.
-SELECT orderID, Name, foodID, processed
+SELECT orderID, Orders.userID, Name, foodID, processed
 FROM Orders
 INNER JOIN Users u1 on u1.userID = orders.userID;
 
