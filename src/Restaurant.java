@@ -220,7 +220,7 @@ public class Restaurant
 		JTable list = new JTable();
 		try
 		{
-			this.statement = this.connection.prepareStatement("SELECT * FROM orders");
+			this.statement = this.connection.prepareStatement("SELECT orderID, Orders.userID, Name, foodID, processed FROM Orders INNER JOIN Users u1 on u1.userID = orders.userID");
 			this.resultSet = this.statement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			int c = rsmd.getColumnCount();
